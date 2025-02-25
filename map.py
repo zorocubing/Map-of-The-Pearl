@@ -272,7 +272,7 @@ mp_popup_content = f"""
         Mammy Pancake
         <img src="{empty_heart_url}" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === '{full_heart_url}' ? '{empty_heart_url}' : '{full_heart_url}'">
     </h4>
-    <img src="{mp_image_url}" width="200px" style='border-radius: 10px;'><br>
+    <img src="{krg_image_url}" width="200px" style='border-radius: 10px;'><br>
     <p style='font-family: Arial; font-size: 12px; color: gray;'>
         A tiny stall dishing out crispy, fluffy egg waffles in Tsim Sha Tsui
     </p>
