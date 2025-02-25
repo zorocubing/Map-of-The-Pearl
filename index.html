@@ -1,710 +1,305 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    
-        <script>
-            L_NO_TOUCH = false;
-            L_DISABLE_3D = false;
-        </script>
-    
-    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
-    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
-    
-            <meta name="viewport" content="width=device-width,
-                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-            <style>
-                #map_6b4dc2f2893014761a59843b515f01ef {
-                    position: relative;
-                    width: 100.0%;
-                    height: 100.0%;
-                    left: 0.0%;
-                    top: 0.0%;
-                }
-                .leaflet-container { font-size: 1rem; }
-            </style>
-        
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Folium Map</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+    </style>
 </head>
 <body>
-    
-    
-            <div class="folium-map" id="map_6b4dc2f2893014761a59843b515f01ef" ></div>
-        
+    <div id="map"></div>
+    <script>
+        var map = L.map('map', {
+            center: [22.3193, 114.1694],
+            zoom: 12,
+            layers: [L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+                attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.'
+            })]
+        });
+
+        var stamenLayer = L.tileLayer('https://watercolormaps.collection.cooperhewitt.org/tile/watercolor/{z}/{x}/{y}.jpg', {
+            attribution: 'Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under CC BY SA.',
+            name: 'Water Color',
+            overlay: false
+        }).addTo(map);
+
+        var fg = L.featureGroup().addTo(map);
+
+        var tooltip = "Click Me!";
+
+        // Victoria Peak Marker
+        var vp_popup_content = `<div style='width: 250px; text-align: center;'>
+            <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>
+                Victoria Peak
+                <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">
+            </h4>
+            <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/Hong_Kong_Night_view_from_Victoria_Peak.jpg" width="200px" style='border-radius: 10px;'><br>
+            <p style='font-family: Arial; font-size: 12px; color: gray;'>
+                The highest point on Hong Kong Island, offering breathtaking views of the skyline
+            </p>
+        </div>`;
+        L.marker([22.2758, 114.1456], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/location%20(1).png',
+                iconSize: [30, 30]
+            })
+        }).bindPopup(vp_popup_content, { maxWidth: 250 }).addTo(fg);
+
+        // Tian Tan Buddha Marker
+        var ttb_popup_content = `<div style='width: 250px; text-align: center;'>
+            <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>
+                Tian Tan Buddha
+                <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">
+            </h4>
+            <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/tian_tan_buddha.jpg" width="200px" style='border-radius: 10px;'><br>
+            <p style='font-family: Arial; font-size: 12px; color: gray;'>
+                The majestic statue on Lantau Island, offers stunning views of the lush mountains
+            </p>
+        </div>`;
+        L.marker([22.2525, 113.9031], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/location%20(1).png',
+                iconSize: [30, 30]
+            })
+        }).bindPopup(ttb_popup_content, { maxWidth: 250 }).addTo(fg);
+
+        // Avenue of Stars Marker
+        var aos_popup_content = `<div style='width: 250px; text-align: center;'>
+            <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>
+                Avenue of Stars
+                <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 极简风格; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">
+            </h4>
+            <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/avenueofstars.png" width="200px" style='border-radius: 10px;'><br>
+            <p style='font-family: Arial; font-size: 12px; color: gray;'>
+                A scenic promenade honoring Hong Kong's cinematic legends along Victoria Harbour
+            </p>
+        </div>`;
+        L.marker([22.2932, 114.1746], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/location%20(1).png',
+                iconSize: [30, 30]
+            })
+        }).bindPopup(aos_popup_content, { maxWidth: 250 }).addTo(fg);
+
+        // Victoria Harbour Marker
+        var vh_popup_content = `<div style='width: 250px; text-align: center;'>
+            <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>
+                Victoria Harbour
+                <img src="https://raw.githubusercontent.com/zorocubing/极简风格/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">
+            </h4>
+            <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/victoriaharbour.png" width="200px" style='border-radius: 10px;'><br>
+            <p style='font-family: Arial; font-size: 12px; color: gray;'>
+                A scenic promenade honoring Hong Kong's cinematic legends along Victoria Harbour
+            </p>
+        </div>`;
+        L.marker([22.2820, 114.1735], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/location%20(1).png',
+                iconSize: [30, 30]
+            })
+        }).bindPopup(vh_popup_content, { maxWidth: 250 }).addTo(fg);
+
+        // Ngong Ping 360 Marker
+        var np360_popup_content = `<div style='width: 250px; text-align: center;'>
+            <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>
+                Ngong Ping 360
+                <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">
+            </h4>
+           极简风格; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">
+            </h4>
+            <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/npthreesixty.png" width="200px" style='border-radius: 10px;'><br>
+            <p style='font-family: Arial; font-size: 12px; color: gray;'>
+                A scenic cable car ride offering panoramic views of Lantau Island’s peaks and coastline
+            </p>
+        </div>`;
+        L.marker([22.2559, 113.9025], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/location%20(1).png',
+                iconSize: [30, 30]
+            })
+        }).bindPopup(np360_popup_content, { maxWidth: 250 }).addTo(fg);
+
+        // Wong Tai Sin Temple Marker
+        var wtst_popup_content = `<div style='width: 250px; text-align: center;'>
+            <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>
+                Wong Tai Sin Temple
+                <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">
+            </h4>
+            <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/wtst.png" width="200px" style='border-radius: 10px;'><br>
+            <p style='font-family: Arial; font-size: 12px; color: gray;'>
+                A vibrant Taoist temple renowned for its prayer-answering traditions in Kowloon
+            </p>
+        </div>`;
+        L.marker([22.3424, 114.1936], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/location%20(1).png',
+                iconSize: [30, 30]
+            })
+        }).bindPopup(wtst_popup_content, { maxWidth: 250 }).addTo(fg);
+
+        // Lan Kwai Fong Marker
+        var lkf_popup_content = `<div style='width: 250px; text-align: center;'>
+            <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>
+                Lan Kwai Fong
+                <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">
+            </h4>
+            <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pear极简风格/main/lankwaifong.png" width="200px" style='border-radius: 10px;'><br>
+            <p style='font-family: Arial; font-size: 12px; color: gray;'>
+                A lively nightlife hub packed with bars and eateries in Central Hong Kong
+            </极简风格>
+        </div>`;
+        L.marker([22.2806, 114.1557], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/blueloca.png',
+                iconSize: [30, 30]
+            })
+        }).bindPopup(lkf_popup_content, { maxWidth: 250 }).addTo(fg);
+
+        // Nathan Road Marker
+        var nr_popup_content = `<div style='width: 250极简风格; text-align: center;'>
+            <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>
+                Nathan Road
+                <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">
+            </h4>
+            <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/nathanroad.png" width="200px" style='border-radius: 10px;'><br>
+            <p style='font-family: Arial; font-size: 12px; color: gray;'>
+                A bustling ‘Golden Mile’ lined with shops and neon lights in Kowloon’s heart
+            </p>
+        </div>`;
+        L.marker([22.2950, 114.1719], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/blueloca.png',
+                iconSize: [30, 30]
+            })
+        }).bindPopup(nr_popup_content, { maxWidth: 250 }).addTo(fg);
+
+        // Temple Street Marker
+        var ts_popup_content = `<div style='width: 250px; text-align: center;'>
+            <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>
+                Temple Street
+                <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">
+            </h4>
+            <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/templestreet.png" width="200px" style='border-radius: 10px;'><br>
+            <p style='font-family: Arial; font-size: 12px; color: gray;'>
+                A lively night market buzzing with stalls and street food in Kowloon
+            </p>
+        </div>`;
+        L.marker([22.3070, 114.1702], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/blueloca.png',
+                iconSize: [30, 30]
+            })
+        }).bindPopup(ts_popup_content, { maxWidth: 250 }).addTo(fg);
+
+        // Hollywood Street Marker
+        var hs_popup_content = `<div style='width: 250px; text-align: center;'>
+            <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>
+                Hollywood Street
+                <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? '极简风格; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">
+            </h4>
+            <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/hollywood.png" width="200px" style='border-radius: 10px;'><br>
+            <p style='font-family: Arial; font-size: 极简风格; color: gray;'>
+                A historic street famed for antiques and art in Central Hong Kong
+            </p>
+        </div>`;
+        L.marker([22.2832, 114.1528], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/blueloca.png',
+                iconSize: [30, 30]
+            })
+        }).bindPopup(hs_popup_content, { maxWidth: 250 }).addTo(fg);
+
+        // Kam's Roast Goose Marker
+        var krg_popup_content = `<div style='width: 250px; text-align: center;'>
+            <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>
+                Kam's Roast Goose
+                <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">
+            </h4>
+            <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/kamsroast.png" width="200px" style='border-radius: 10px;'><br>
+            <p style='font-family: Arial; font-size: 12px; color: gray;'>
+                A Michelin-starred gem serving juicy roast goose and crispy char siu in Wan Chai
+            </p>
+        </div>`;
+        L.marker([22.2777, 114.1725], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/greenloca.png',
+                iconSize: [30, 30]
+            })
+        }).bindPopup(krg_popup_content, { maxWidth: 250 }).addTo(fg);
+
+        // Mammy Pancake Marker
+        var mp_popup_content = `<div style='width: 250px; text-align: center;'>
+            <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>
+                Mammy Pancake
+                <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing极简风格/main/redheart.png'">
+            </h4>
+            <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/mammy.png" width="200px" style='border-radius: 10px;'><br>
+            <p style='font-family: Arial; font-size: 12px; color: gray;'>
+                A tiny stall dishing out crispy, fluffy egg waffles in Tsim Sha Tsui
+            </p>
+        </div>`;
+        L.marker([22.2986, 114.1721], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/greenloca.png',
+                iconSize: [30, 30]
+            })
+极简风格).bindPopup(mp_popup_content, { maxWidth: 250 }).addTo(fg);
+
+        // The Chairman Marker
+        var tc_popup_content = `<div style='width: 250px; text-align: center;'>
+            <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>
+                The Chairman
+                <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart极简风格.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">
+            </h4>
+            <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/tc.png" width="200px极简风格 style='border-radius: 10px;'><br>
+            <p style='font-family: Arial; font-size: 12px; color: gray;'>
+                Elegant Cantonese dining with bold flavors on Wellington Street
+            </p>
+        </div>`;
+        L.marker([22.2815, 114.1550], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/greenloca.png',
+                iconSize: [30, 30]
+            })
+        }).bindPopup(tc_popup_content, { maxWidth: 250 }).addTo(fg);
+
+        // Hop Yik Tai Marker
+        var hyt_popup_content = `<div style='width: 250px; text-align: center;'>
+            <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>
+                Hop Yik Tai
+                <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">
+            </h4>
+            <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/hup.png" width="200px" style='border-radius: 10px;'><br>
+            <p style='font-family: Arial; font-size: 12px; color: gray;'>
+                Silky cheong fun and street eats in the heart of Sham Shui Po
+            </p>
+        </div>`;
+        L.marker([22.3298, 114.1662], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/greenloca.png',
+                iconSize: [30, 30]
+            })
+        }).bindPopup(hyt_popup_content, { maxWidth: 250 }).addTo(fg);
+
+        // Layer Control
+        var layerControl = L.control.layers({
+            'CartoDB Positron': L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+                attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.'
+            }),
+            'Water Color': stamenLayer
+        }, {
+            'Show markers': fg
+        }).addTo(map);
+    </script>
 </body>
-<script>
-    
-    
-            var map_6b4dc2f2893014761a59843b515f01ef = L.map(
-                "map_6b4dc2f2893014761a59843b515f01ef",
-                {
-                    center: [22.3193, 114.1694],
-                    crs: L.CRS.EPSG3857,
-                    ...{
-  "zoom": 12,
-  "zoomControl": true,
-  "preferCanvas": false,
-}
-
-                }
-            );
-
-            
-
-        
-    
-            var tile_layer_16138b527ba57edb38a2b3e594164d80 = L.tileLayer(
-                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-                {
-  "minZoom": 0,
-  "maxZoom": 20,
-  "maxNativeZoom": 20,
-  "noWrap": false,
-  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
-  "subdomains": "abcd",
-  "detectRetina": false,
-  "tms": false,
-  "opacity": 1,
-}
-
-            );
-        
-    
-            tile_layer_16138b527ba57edb38a2b3e594164d80.addTo(map_6b4dc2f2893014761a59843b515f01ef);
-        
-    
-            var tile_layer_de8bb77d0f688f2648b49df87f22745d = L.tileLayer(
-                "https://watercolormaps.collection.cooperhewitt.org/tile/watercolor/{z}/{x}/{y}.jpg",
-                {
-  "minZoom": 0,
-  "maxZoom": 18,
-  "maxNativeZoom": 18,
-  "noWrap": false,
-  "attribution": "Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under CC BY SA.",
-  "subdomains": "abc",
-  "detectRetina": false,
-  "tms": false,
-  "opacity": 1,
-}
-
-            );
-        
-    
-            tile_layer_de8bb77d0f688f2648b49df87f22745d.addTo(map_6b4dc2f2893014761a59843b515f01ef);
-        
-    
-            var feature_group_80429ef0d709c83040977a3daf2b8032 = L.featureGroup(
-                {
-}
-            );
-        
-    
-            var marker_090d31831fcb1989b2afc191f7bdf0cd = L.marker(
-                [22.2758, 114.1456],
-                {
-}
-            ).addTo(feature_group_80429ef0d709c83040977a3daf2b8032);
-        
-    
-        var custom_icon_b009ba24c9d43c485b49a25537e03b43 = L.icon({
-  "iconUrl": "https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/location%20(1).png",
-  "iconSize": [30, 30],
-});
-        marker_090d31831fcb1989b2afc191f7bdf0cd.setIcon(custom_icon_b009ba24c9d43c485b49a25537e03b43);
-        
-    
-        var popup_459fb25dea8b6781ae6c6c643e71ab1f = L.popup({
-  "maxWidth": 250,
-});
-
-        
-            
-                var html_b9b730e6506eca7307f09dd39d88318d = $(`<div id="html_b9b730e6506eca7307f09dd39d88318d" style="width: 100.0%; height: 100.0%;"> <div style='width: 250px; text-align: center;'>     <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>         Victoria Peak         <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">     </h4>     <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/Hong_Kong_Night_view_from_Victoria_Peak.jpg" width="200px" style='border-radius: 10px;'><br>     <p style='font-family: Arial; font-size: 12px; color: gray;'>         The highest point on Hong Kong Island, offering breathtaking views of the skyline     </p> </div> </div>`)[0];
-                popup_459fb25dea8b6781ae6c6c643e71ab1f.setContent(html_b9b730e6506eca7307f09dd39d88318d);
-            
-        
-
-        marker_090d31831fcb1989b2afc191f7bdf0cd.bindPopup(popup_459fb25dea8b6781ae6c6c643e71ab1f)
-        ;
-
-        
-    
-    
-            marker_090d31831fcb1989b2afc191f7bdf0cd.bindTooltip(
-                `<div>
-                     Click Me!
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var marker_37d4342f4e35a1ea5a832c321655a605 = L.marker(
-                [22.2525, 113.9031],
-                {
-}
-            ).addTo(feature_group_80429ef0d709c83040977a3daf2b8032);
-        
-    
-        var custom_icon_ce9eaf5a2ad5c2c56dd5155d31a0935b = L.icon({
-  "iconUrl": "https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/location%20(1).png",
-  "iconSize": [30, 30],
-});
-        marker_37d4342f4e35a1ea5a832c321655a605.setIcon(custom_icon_ce9eaf5a2ad5c2c56dd5155d31a0935b);
-        
-    
-        var popup_bcf8988592436a5141315d6dbc51986d = L.popup({
-  "maxWidth": 250,
-});
-
-        
-            
-                var html_4f8f087a0940f5676d3a5ec249af020f = $(`<div id="html_4f8f087a0940f5676d3a5ec249af020f" style="width: 100.0%; height: 100.0%;"> <div style='width: 250px; text-align: center;'>     <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>         Tian Tan Buddha         <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">     </h4>     <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/tian_tan_buddha.jpg" width="200px" style='border-radius: 10px;'><br>     <p style='font-family: Arial; font-size: 12px; color: gray;'>         The majestic statue on Lantau Island, offers stunning views of the lush mountains     </p> </div> </div>`)[0];
-                popup_bcf8988592436a5141315d6dbc51986d.setContent(html_4f8f087a0940f5676d3a5ec249af020f);
-            
-        
-
-        marker_37d4342f4e35a1ea5a832c321655a605.bindPopup(popup_bcf8988592436a5141315d6dbc51986d)
-        ;
-
-        
-    
-    
-            marker_37d4342f4e35a1ea5a832c321655a605.bindTooltip(
-                `<div>
-                     Click Me!
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var marker_ef0d16f5fb4558e943b8f18d71a1c341 = L.marker(
-                [22.2932, 114.1746],
-                {
-}
-            ).addTo(feature_group_80429ef0d709c83040977a3daf2b8032);
-        
-    
-        var custom_icon_a0e0e91c3fcb4cb0eb5231a38c596d3b = L.icon({
-  "iconUrl": "https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/location%20(1).png",
-  "iconSize": [30, 30],
-});
-        marker_ef0d16f5fb4558e943b8f18d71a1c341.setIcon(custom_icon_a0e0e91c3fcb4cb0eb5231a38c596d3b);
-        
-    
-        var popup_a533aa87a316a9040d28a718bca08118 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_3b61fd616133b3123c939c253be10cd0 = $(`<div id="html_3b61fd616133b3123c939c253be10cd0" style="width: 100.0%; height: 100.0%;"> <div style='width: 250px; text-align: center;'>     <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>         Avenue of Stars         <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">     </h4>     <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/avenueofstars.png" width="200px" style='border-radius: 10px;'><br>     <p style='font-family: Arial; font-size: 12px; color: gray;'>         A scenic promenade honoring Hong Kong's cinematic legends along Victoria Harbour     </p> </div> </div>`)[0];
-                popup_a533aa87a316a9040d28a718bca08118.setContent(html_3b61fd616133b3123c939c253be10cd0);
-            
-        
-
-        marker_ef0d16f5fb4558e943b8f18d71a1c341.bindPopup(popup_a533aa87a316a9040d28a718bca08118)
-        ;
-
-        
-    
-    
-            marker_ef0d16f5fb4558e943b8f18d71a1c341.bindTooltip(
-                `<div>
-                     Click Me!
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var marker_1fbba6f959c0e111ee794be5b3dd6d82 = L.marker(
-                [22.282, 114.1735],
-                {
-}
-            ).addTo(feature_group_80429ef0d709c83040977a3daf2b8032);
-        
-    
-        var custom_icon_21d900b6231267fae17826b269d5e25b = L.icon({
-  "iconUrl": "https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/location%20(1).png",
-  "iconSize": [30, 30],
-});
-        marker_1fbba6f959c0e111ee794be5b3dd6d82.setIcon(custom_icon_21d900b6231267fae17826b269d5e25b);
-        
-    
-        var popup_66f576b707305f12dc743751015af8f9 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_92b4838a07999067482e591d8042a6d8 = $(`<div id="html_92b4838a07999067482e591d8042a6d8" style="width: 100.0%; height: 100.0%;"> <div style='width: 250px; text-align: center;'>     <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>         Victoria Harbour         <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">     </h4>     <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/victoriaharbour.png" width="200px" style='border-radius: 10px;'><br>     <p style='font-family: Arial; font-size: 12px; color: gray;'>         A scenic promenade honoring Hong Kong's cinematic legends along Victoria Harbour     </p> </div> </div>`)[0];
-                popup_66f576b707305f12dc743751015af8f9.setContent(html_92b4838a07999067482e591d8042a6d8);
-            
-        
-
-        marker_1fbba6f959c0e111ee794be5b3dd6d82.bindPopup(popup_66f576b707305f12dc743751015af8f9)
-        ;
-
-        
-    
-    
-            marker_1fbba6f959c0e111ee794be5b3dd6d82.bindTooltip(
-                `<div>
-                     Click Me!
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var marker_af925418f3231e101aa8fd788770df8a = L.marker(
-                [22.2559, 113.9025],
-                {
-}
-            ).addTo(feature_group_80429ef0d709c83040977a3daf2b8032);
-        
-    
-        var custom_icon_01f354e90c8bcfe72a5cc53c8cabcdcf = L.icon({
-  "iconUrl": "https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/location%20(1).png",
-  "iconSize": [30, 30],
-});
-        marker_af925418f3231e101aa8fd788770df8a.setIcon(custom_icon_01f354e90c8bcfe72a5cc53c8cabcdcf);
-        
-    
-        var popup_3d0e0654339d9836cd43d6983d0115c7 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_60a2593aaad1c86f1c19755803afa86c = $(`<div id="html_60a2593aaad1c86f1c19755803afa86c" style="width: 100.0%; height: 100.0%;"> <div style='width: 250px; text-align: center;'>     <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>         Ngong Ping 360         <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">     </h4>     <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/npthreesixty.png" width="200px" style='border-radius: 10px;'><br>     <p style='font-family: Arial; font-size: 12px; color: gray;'>         A scenic cable car ride offering panoramic views of Lantau Island’s peaks and coastline     </p> </div> </div>`)[0];
-                popup_3d0e0654339d9836cd43d6983d0115c7.setContent(html_60a2593aaad1c86f1c19755803afa86c);
-            
-        
-
-        marker_af925418f3231e101aa8fd788770df8a.bindPopup(popup_3d0e0654339d9836cd43d6983d0115c7)
-        ;
-
-        
-    
-    
-            marker_af925418f3231e101aa8fd788770df8a.bindTooltip(
-                `<div>
-                     Click Me!
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var marker_11f941f3727b25b463d94487220b0150 = L.marker(
-                [22.3424, 114.1936],
-                {
-}
-            ).addTo(feature_group_80429ef0d709c83040977a3daf2b8032);
-        
-    
-        var custom_icon_38110911e48a55b73b7791f250c86313 = L.icon({
-  "iconUrl": "https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/location%20(1).png",
-  "iconSize": [30, 30],
-});
-        marker_11f941f3727b25b463d94487220b0150.setIcon(custom_icon_38110911e48a55b73b7791f250c86313);
-        
-    
-        var popup_243fe6a8f81236cbd7a2385fe3bb7b64 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_04eab180ca2f1134c5267c4c06b2f2ca = $(`<div id="html_04eab180ca2f1134c5267c4c06b2f2ca" style="width: 100.0%; height: 100.0%;"> <div style='width: 250px; text-align: center;'>     <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>         Wong Tai Sin Temple         <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">     </h4>     <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/wtst.png" width="200px" style='border-radius: 10px;'><br>     <p style='font-family: Arial; font-size: 12px; color: gray;'>         A vibrant Taoist temple renowned for its prayer-answering traditions in Kowloon     </p> </div> </div>`)[0];
-                popup_243fe6a8f81236cbd7a2385fe3bb7b64.setContent(html_04eab180ca2f1134c5267c4c06b2f2ca);
-            
-        
-
-        marker_11f941f3727b25b463d94487220b0150.bindPopup(popup_243fe6a8f81236cbd7a2385fe3bb7b64)
-        ;
-
-        
-    
-    
-            marker_11f941f3727b25b463d94487220b0150.bindTooltip(
-                `<div>
-                     Click Me!
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var marker_83107672fc8e0cf71cb0ff1184e7a257 = L.marker(
-                [22.2806, 114.1557],
-                {
-}
-            ).addTo(feature_group_80429ef0d709c83040977a3daf2b8032);
-        
-    
-        var custom_icon_dc6a96d56500465ee23678350c8ee805 = L.icon({
-  "iconUrl": "https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/blueloca.png",
-  "iconSize": [30, 30],
-});
-        marker_83107672fc8e0cf71cb0ff1184e7a257.setIcon(custom_icon_dc6a96d56500465ee23678350c8ee805);
-        
-    
-        var popup_28f4e9cabf498975f53e6d896bb2e839 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_59308e96edbf9fb78f83abe8f358149c = $(`<div id="html_59308e96edbf9fb78f83abe8f358149c" style="width: 100.0%; height: 100.0%;"> <div style='width: 250px; text-align: center;'>     <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>         Lan Kwai Fong         <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">     </h4>     <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/lankwaifong.png" width="200px" style='border-radius: 10px;'><br>     <p style='font-family: Arial; font-size: 12px; color: gray;'>         A lively nightlife hub packed with bars and eateries in Central Hong Kong     </p> </div> </div>`)[0];
-                popup_28f4e9cabf498975f53e6d896bb2e839.setContent(html_59308e96edbf9fb78f83abe8f358149c);
-            
-        
-
-        marker_83107672fc8e0cf71cb0ff1184e7a257.bindPopup(popup_28f4e9cabf498975f53e6d896bb2e839)
-        ;
-
-        
-    
-    
-            marker_83107672fc8e0cf71cb0ff1184e7a257.bindTooltip(
-                `<div>
-                     Click Me!
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var marker_f8216de93d9757c3257daf5e8977de4f = L.marker(
-                [22.295, 114.1719],
-                {
-}
-            ).addTo(feature_group_80429ef0d709c83040977a3daf2b8032);
-        
-    
-        var custom_icon_ce2a21df6c6671e54a934eb3f72a6e32 = L.icon({
-  "iconUrl": "https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/blueloca.png",
-  "iconSize": [30, 30],
-});
-        marker_f8216de93d9757c3257daf5e8977de4f.setIcon(custom_icon_ce2a21df6c6671e54a934eb3f72a6e32);
-        
-    
-        var popup_8d6d4bb258dda2a0fa57a85f3230be7b = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_b0c8ed300fd6057f1ba4d5a562916e42 = $(`<div id="html_b0c8ed300fd6057f1ba4d5a562916e42" style="width: 100.0%; height: 100.0%;"> <div style='width: 250px; text-align: center;'>     <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>         Nathan Road         <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">     </h4>     <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/nathanroad.png" width="200px" style='border-radius: 10px;'><br>     <p style='font-family: Arial; font-size: 12px; color: gray;'>         A bustling ‘Golden Mile’ lined with shops and neon lights in Kowloon’s heart     </p> </div> </div>`)[0];
-                popup_8d6d4bb258dda2a0fa57a85f3230be7b.setContent(html_b0c8ed300fd6057f1ba4d5a562916e42);
-            
-        
-
-        marker_f8216de93d9757c3257daf5e8977de4f.bindPopup(popup_8d6d4bb258dda2a0fa57a85f3230be7b)
-        ;
-
-        
-    
-    
-            marker_f8216de93d9757c3257daf5e8977de4f.bindTooltip(
-                `<div>
-                     Click Me!
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var marker_48f0e31ad9dcb1b0377a2697e70eb835 = L.marker(
-                [22.307, 114.1702],
-                {
-}
-            ).addTo(feature_group_80429ef0d709c83040977a3daf2b8032);
-        
-    
-        var custom_icon_5dcbf93f9a136835e335a30d4176e89c = L.icon({
-  "iconUrl": "https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/blueloca.png",
-  "iconSize": [30, 30],
-});
-        marker_48f0e31ad9dcb1b0377a2697e70eb835.setIcon(custom_icon_5dcbf93f9a136835e335a30d4176e89c);
-        
-    
-        var popup_5238182e040f7edc73d08a7464e1daa8 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_92c2780e5e5a1fc49f5b8d674413223b = $(`<div id="html_92c2780e5e5a1fc49f5b8d674413223b" style="width: 100.0%; height: 100.0%;"> <div style='width: 250px; text-align: center;'>     <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>         Temple Street         <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">     </h4>     <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/templestreet.png" width="200px" style='border-radius: 10px;'><br>     <p style='font-family: Arial; font-size: 12px; color: gray;'>         A lively night market buzzing with stalls and street food in Kowloon     </p> </div> </div>`)[0];
-                popup_5238182e040f7edc73d08a7464e1daa8.setContent(html_92c2780e5e5a1fc49f5b8d674413223b);
-            
-        
-
-        marker_48f0e31ad9dcb1b0377a2697e70eb835.bindPopup(popup_5238182e040f7edc73d08a7464e1daa8)
-        ;
-
-        
-    
-    
-            marker_48f0e31ad9dcb1b0377a2697e70eb835.bindTooltip(
-                `<div>
-                     Click Me!
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var marker_1177053c4ee87a2d54ddb1bd454a9e4c = L.marker(
-                [22.2832, 114.1528],
-                {
-}
-            ).addTo(feature_group_80429ef0d709c83040977a3daf2b8032);
-        
-    
-        var custom_icon_0ebb52086eccded2b88d3c2a6531e82d = L.icon({
-  "iconUrl": "https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/blueloca.png",
-  "iconSize": [30, 30],
-});
-        marker_1177053c4ee87a2d54ddb1bd454a9e4c.setIcon(custom_icon_0ebb52086eccded2b88d3c2a6531e82d);
-        
-    
-        var popup_15398421f0a2e59ab844ad8aa380ee19 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_d4a6b9e0daf894baa0d9117186673e88 = $(`<div id="html_d4a6b9e0daf894baa0d9117186673e88" style="width: 100.0%; height: 100.0%;"> <div style='width: 250px; text-align: center;'>     <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>         Hollywood Street         <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">     </h4>     <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/hollywood.png" width="200px" style='border-radius: 10px;'><br>     <p style='font-family: Arial; font-size: 12px; color: gray;'>         A historic street famed for antiques and art in Central Hong Kong     </p> </div> </div>`)[0];
-                popup_15398421f0a2e59ab844ad8aa380ee19.setContent(html_d4a6b9e0daf894baa0d9117186673e88);
-            
-        
-
-        marker_1177053c4ee87a2d54ddb1bd454a9e4c.bindPopup(popup_15398421f0a2e59ab844ad8aa380ee19)
-        ;
-
-        
-    
-    
-            marker_1177053c4ee87a2d54ddb1bd454a9e4c.bindTooltip(
-                `<div>
-                     Click Me!
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var marker_ff31aa4b09739c7f43e27c6137ae7b91 = L.marker(
-                [22.2777, 114.1725],
-                {
-}
-            ).addTo(feature_group_80429ef0d709c83040977a3daf2b8032);
-        
-    
-        var custom_icon_9b3bcbbeeada527e18666a56eedfaf17 = L.icon({
-  "iconUrl": "https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/greenloca.png",
-  "iconSize": [30, 30],
-});
-        marker_ff31aa4b09739c7f43e27c6137ae7b91.setIcon(custom_icon_9b3bcbbeeada527e18666a56eedfaf17);
-        
-    
-        var popup_7642eed07ce7e338a7f8cd2893687925 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_f8edab6e997e3097cd72ce59b0442911 = $(`<div id="html_f8edab6e997e3097cd72ce59b0442911" style="width: 100.0%; height: 100.0%;"> <div style='width: 250px; text-align: center;'>     <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>         Kam's Roast Goose         <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">     </h4>     <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/kamsroast.png" width="200px" style='border-radius: 10px;'><br>     <p style='font-family: Arial; font-size: 12px; color: gray;'>         A Michelin-starred gem serving juicy roast goose and crispy char siu in Wan Chai     </p> </div> </div>`)[0];
-                popup_7642eed07ce7e338a7f8cd2893687925.setContent(html_f8edab6e997e3097cd72ce59b0442911);
-            
-        
-
-        marker_ff31aa4b09739c7f43e27c6137ae7b91.bindPopup(popup_7642eed07ce7e338a7f8cd2893687925)
-        ;
-
-        
-    
-    
-            marker_ff31aa4b09739c7f43e27c6137ae7b91.bindTooltip(
-                `<div>
-                     Click Me!
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var marker_a0c68d91e62d187ce28539ca4dd580da = L.marker(
-                [22.2986, 114.1721],
-                {
-}
-            ).addTo(feature_group_80429ef0d709c83040977a3daf2b8032);
-        
-    
-        var custom_icon_e90d8adda956c07ea430cc36af748488 = L.icon({
-  "iconUrl": "https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/greenloca.png",
-  "iconSize": [30, 30],
-});
-        marker_a0c68d91e62d187ce28539ca4dd580da.setIcon(custom_icon_e90d8adda956c07ea430cc36af748488);
-        
-    
-        var popup_83dbb1652403bb7699dce4dc38ad8b37 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_db7ebdbd904f2cad5f89b6a96a92735e = $(`<div id="html_db7ebdbd904f2cad5f89b6a96a92735e" style="width: 100.0%; height: 100.0%;"> <div style='width: 250px; text-align: center;'>     <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>         Mammy Pancake         <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">     </h4>     <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/kamsroast.png" width="200px" style='border-radius: 10px;'><br>     <p style='font-family: Arial; font-size: 12px; color: gray;'>         A tiny stall dishing out crispy, fluffy egg waffles in Tsim Sha Tsui     </p> </div> </div>`)[0];
-                popup_83dbb1652403bb7699dce4dc38ad8b37.setContent(html_db7ebdbd904f2cad5f89b6a96a92735e);
-            
-        
-
-        marker_a0c68d91e62d187ce28539ca4dd580da.bindPopup(popup_83dbb1652403bb7699dce4dc38ad8b37)
-        ;
-
-        
-    
-    
-            marker_a0c68d91e62d187ce28539ca4dd580da.bindTooltip(
-                `<div>
-                     Click Me!
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var marker_6f97fd94acd105109893cab84924aefd = L.marker(
-                [22.2815, 114.155],
-                {
-}
-            ).addTo(feature_group_80429ef0d709c83040977a3daf2b8032);
-        
-    
-        var custom_icon_e368045afcafa244af4d1bacaf774687 = L.icon({
-  "iconUrl": "https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/greenloca.png",
-  "iconSize": [30, 30],
-});
-        marker_6f97fd94acd105109893cab84924aefd.setIcon(custom_icon_e368045afcafa244af4d1bacaf774687);
-        
-    
-        var popup_e7d48265db49ac11c8e16b55cdd6af71 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_7125d87765adec3bee13569a5fe20502 = $(`<div id="html_7125d87765adec3bee13569a5fe20502" style="width: 100.0%; height: 100.0%;"> <div style='width: 250px; text-align: center;'>     <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>         The Chairman         <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">     </h4>     <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/tc.png" width="200px" style='border-radius: 10px;'><br>     <p style='font-family: Arial; font-size: 12px; color: gray;'>         Elegant Cantonese dining with bold flavors on Wellington Street     </p> </div> </div>`)[0];
-                popup_e7d48265db49ac11c8e16b55cdd6af71.setContent(html_7125d87765adec3bee13569a5fe20502);
-            
-        
-
-        marker_6f97fd94acd105109893cab84924aefd.bindPopup(popup_e7d48265db49ac11c8e16b55cdd6af71)
-        ;
-
-        
-    
-    
-            marker_6f97fd94acd105109893cab84924aefd.bindTooltip(
-                `<div>
-                     Click Me!
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var marker_e09141d03a215b9fb306605f7968cfcf = L.marker(
-                [22.3298, 114.1662],
-                {
-}
-            ).addTo(feature_group_80429ef0d709c83040977a3daf2b8032);
-        
-    
-        var custom_icon_12e54486f0bb876ea3dd3537902fa03d = L.icon({
-  "iconUrl": "https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/greenloca.png",
-  "iconSize": [30, 30],
-});
-        marker_e09141d03a215b9fb306605f7968cfcf.setIcon(custom_icon_12e54486f0bb876ea3dd3537902fa03d);
-        
-    
-        var popup_799c5dc63e5e03c26b556ca261fbb923 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_36a84efcf2ccfcc53c389f7702145bf4 = $(`<div id="html_36a84efcf2ccfcc53c389f7702145bf4" style="width: 100.0%; height: 100.0%;"> <div style='width: 250px; text-align: center;'>     <h4 style='font-family: Arial; color: black; margin-bottom: 10px;'>         Hop Yik Tai         <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png" style="width: 16px; height: 16px; cursor: pointer; vertical-align: middle;" onclick="this.src = this.src === 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png' ? 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/heart.png' : 'https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/redheart.png'">     </h4>     <img src="https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/hup.png" width="200px" style='border-radius: 10px;'><br>     <p style='font-family: Arial; font-size: 12px; color: gray;'>         Silky cheong fun and street eats in the heart of Sham Shui Po     </p> </div> </div>`)[0];
-                popup_799c5dc63e5e03c26b556ca261fbb923.setContent(html_36a84efcf2ccfcc53c389f7702145bf4);
-            
-        
-
-        marker_e09141d03a215b9fb306605f7968cfcf.bindPopup(popup_799c5dc63e5e03c26b556ca261fbb923)
-        ;
-
-        
-    
-    
-            marker_e09141d03a215b9fb306605f7968cfcf.bindTooltip(
-                `<div>
-                     Click Me!
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            feature_group_80429ef0d709c83040977a3daf2b8032.addTo(map_6b4dc2f2893014761a59843b515f01ef);
-        
-    
-            var layer_control_49ad377a459d1714e8a34408ada934e6_layers = {
-                base_layers : {
-                    "cartodbpositron" : tile_layer_16138b527ba57edb38a2b3e594164d80,
-                    "Water Color" : tile_layer_de8bb77d0f688f2648b49df87f22745d,
-                },
-                overlays :  {
-                    "Show markers" : feature_group_80429ef0d709c83040977a3daf2b8032,
-                },
-            };
-            let layer_control_49ad377a459d1714e8a34408ada934e6 = L.control.layers(
-                layer_control_49ad377a459d1714e8a34408ada934e6_layers.base_layers,
-                layer_control_49ad377a459d1714e8a34408ada934e6_layers.overlays,
-                {
-  "position": "topright",
-  "collapsed": true,
-  "autoZIndex": true,
-}
-            ).addTo(map_6b4dc2f2893014761a59843b515f01ef);
-
-        
-</script>
 </html>
