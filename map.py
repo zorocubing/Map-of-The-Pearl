@@ -363,7 +363,7 @@ hkd_popup_content = f"""
 """
 
 # Ocean Park marker
-folium.Marker([22.2466, 114.1376], popup=hkd_popup_content, icon=folium.CustomIcon("https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/pinkloca.png", icon_size=(30, 30)), tooltip=tooltip).add_to(fg)
+folium.Marker([22.2408, 114.1722], popup=hkd_popup_content, icon=folium.CustomIcon("https://raw.githubusercontent.com/zorocubing/Map-of-The-Pearl/main/pinkloca.png", icon_size=(30, 30)), tooltip=tooltip).add_to(fg)
 
 
 # Save to an HTML file and open the file in web browser
